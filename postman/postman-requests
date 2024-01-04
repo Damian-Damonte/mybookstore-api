@@ -1,0 +1,178 @@
+{
+	"info": {
+		"_postman_id": "a29f355c-1373-4cdb-9917-da40920f3f86",
+		"name": "silvercsoft test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21574452"
+	},
+	"item": [
+		{
+			"name": "books",
+			"item": [
+				{
+					"name": "get by title",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/books/search?page=0&size=5&title=harry potter",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"books",
+								"search"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								},
+								{
+									"key": "sort",
+									"value": "quantity",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": "harry potter"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/books?page=0&size=5&sort=price",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"books"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								},
+								{
+									"key": "sort",
+									"value": "price"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save book",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"Harry Potter y la cámara secreta\",\r\n    \"author\":\"J. K. Rowling\",\r\n    \"genre\":\"Ficcion\",\r\n    \"quantity\":10,\r\n    \"price\":100.00,\r\n    \"image_url\":\"https://http2.mlstatic.com/D_NQ_NP_708915-MLA49543959301_042022-O.webp\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/books",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save book Copy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"Harry Potter y la piedra filosofal\",\r\n    \"author\":\"Rowling\",\r\n    \"genre\":\"Acción\",\r\n    \"quantity\":22,\r\n    \"price\":7500.99,\r\n    \"image_url\":\"https://http2.mlstatic.com/D_NQ_NP_647952-MLU72520023188_102023-O.webp\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/books/72",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"books",
+								"72"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save book Copy 2",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/books/71",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"books",
+								"71"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
