@@ -3,6 +3,7 @@ package com.silvercsoft.test.mybookstoreapi.service.imp;
 import com.silvercsoft.test.mybookstoreapi.dto.book.BookPage;
 import com.silvercsoft.test.mybookstoreapi.dto.book.BookRequest;
 import com.silvercsoft.test.mybookstoreapi.dto.book.BookResponse;
+import com.silvercsoft.test.mybookstoreapi.exception.BadRequestException;
 import com.silvercsoft.test.mybookstoreapi.exception.NotFoundException;
 import com.silvercsoft.test.mybookstoreapi.mapper.BookMapper;
 import com.silvercsoft.test.mybookstoreapi.model.Book;
@@ -10,6 +11,7 @@ import com.silvercsoft.test.mybookstoreapi.repository.BookRepository;
 import com.silvercsoft.test.mybookstoreapi.service.BookService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,12 +30,24 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookPage getAllBooks(Pageable pageable) {
-        return toBookReponsePage(bookRepository.findAll(pageable));
+        Page<Book> page = null;
+        try {
+            page = bookRepository.findAll(pageable);
+        } catch (PropertyReferenceException ex) {
+            throw new BadRequestException("invalid sort parameter");
+        }
+        return toBookReponsePage(page);
     }
 
     @Override
     public BookPage getBookByTitle(Pageable pageable, String title) {
-        return toBookReponsePage(bookRepository.findBooksByTitle(pageable,title));
+        Page<Book> page = null;
+        try {
+            page = bookRepository.findBooksByTitle(pageable, title);
+        } catch (PropertyReferenceException ex) {
+            throw new BadRequestException("invalid sort parameter");
+        }
+        return toBookReponsePage(page);
     }
 
     @Override
@@ -47,14 +61,11 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public BookResponse updateBook(Long id, BookRequest bookRequest) {
         Optional<Book> book = bookRepository.findById(id);
-
         if(book.isEmpty()) {
             throw new NotFoundException("book with id " + id + " not found");
         }
-
         Book bookUpdated = bookMapper.bookRequestToBook(bookRequest);
         bookUpdated.setId(id);
-
         return bookMapper.bookToBookResponse(bookRepository.save(bookUpdated));
     }
 
@@ -62,11 +73,9 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public void deleteBook(Long id) {
         Optional<Book> book = bookRepository.findById(id);
-
         if(book.isEmpty()) {
             throw new NotFoundException("book with id " + id + " not found");
         }
-
         bookRepository.deleteById(id);
     }
 
